@@ -19,13 +19,17 @@ public class App {
         window.setVisible(true);
 
         sevenSegmentDisplay.setMutedColor(new Color(20,20,20));
-        sevenSegmentDisplay.setShiningColor(Color.RED);
         sevenSegmentDisplay.setBackground(Color.BLACK);
         sevenSegmentDisplay.setSegmentThickness(30);
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             sevenSegmentDisplay.light(i);
+            sevenSegmentDisplay.setShiningColor(new Color(random(), random(), random()));
             Thread.sleep(100L);
         }
+    }
+
+    private static int random() {
+        return (int)(Math.random() * 155) + 100;
     }
 }
