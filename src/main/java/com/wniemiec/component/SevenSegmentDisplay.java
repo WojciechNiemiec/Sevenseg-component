@@ -5,8 +5,6 @@ import sun.plugin.dom.exception.InvalidStateException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class SevenSegmentDisplay<T> extends JComponent {
     public SevenSegmentDisplay(DisplayControl<T> displayControl, int modulesCount) {
         if (modulesCount > 0) {
             this.displayControl = displayControl;
-            setLayout(new FlowLayout());
+            setLayout(new FlowLayout(FlowLayout.CENTER, 0, segmentThickness));
             modules = new ArrayList<>(modulesCount);
 
             for (int i = 0; i < modulesCount; i++) {
@@ -51,13 +49,19 @@ public class SevenSegmentDisplay<T> extends JComponent {
     }
 
     @Override
-    public void setSize(int width, int height) {
-        super.setSize(width, height);
-        int moduleWidth = getWidth() / modules.size();
+    public void paint(Graphics g) {
+        g.setColor(getBackground());
+        g.fillRect(0,0, getWidth(), getHeight());
+        super.paint(g);
+    }
+
+    @Override
+    public void repaint() {
+        int moduleWidth = getWidth() / modules.size() - segmentThickness;
         for (SevenSegmentModule module : modules) {
             module.setPreferredSize(new Dimension(moduleWidth, getHeight()));
         }
-        repaint();
+        super.repaint();
     }
 
     public int getSegmentThickness() {
@@ -66,6 +70,7 @@ public class SevenSegmentDisplay<T> extends JComponent {
 
     public void setSegmentThickness(int segmentThickness) {
         this.segmentThickness = segmentThickness;
+        setLayout(new FlowLayout(FlowLayout.CENTER, segmentThickness, 0));
         repaint();
     }
 
