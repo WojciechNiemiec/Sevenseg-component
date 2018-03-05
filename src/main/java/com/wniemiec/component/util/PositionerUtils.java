@@ -9,8 +9,8 @@ public final class PositionerUtils {
     private PositionerUtils() {
     }
 
-    private static final float BIG_MARGIN_MULTIPLIER = 1.75f;
-    private static final float SMALL_MARGIN_MULTIPLIER = 0.25f;
+    private static final float BIG_MARGIN_MULTIPLIER = 1.8f;
+    private static final float SMALL_MARGIN_MULTIPLIER = 0.2f;
 
     static int getMargin(int thickness) {
         return (int) (thickness * BIG_MARGIN_MULTIPLIER);

@@ -8,17 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 
 @Getter
-@Setter
 public class Segment extends JComponent {
 
     private SevenSegmentModule module;
     private SegmentPositionType segmentPositionType;
 
     private Color actualColor;
-
-    public Segment(Dimension size) {
-        this.setSize(size);
-    }
 
     public Segment(SegmentPositionType segmentPositionType) {
         this.segmentPositionType = segmentPositionType;
@@ -39,8 +34,10 @@ public class Segment extends JComponent {
         polygon.addPoint(correction, 0);
         polygon.addPoint(getWidth() - correction, 0);
         polygon.addPoint(getWidth(), correction);
+        polygon.addPoint(getWidth(), getHeight() - correction);
         polygon.addPoint(getWidth() - correction, getHeight());
         polygon.addPoint(correction, getHeight());
+        polygon.addPoint(0,  getHeight() - correction);
         polygon.addPoint(0,  correction);
 
         return polygon;

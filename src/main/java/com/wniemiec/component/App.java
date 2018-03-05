@@ -10,7 +10,6 @@ import java.awt.*;
 public class App {
     public static void main(String[] args) throws InterruptedException {
         SevenSegmentModule<Integer> sevenSegmentModule = new SevenSegmentModule<>(DefaultModuleControl.getInstance());
-        sevenSegmentModule.setSize(1000, 1000);
 
         JPanel panel = new JPanel();
         panel.setSize(1000, 1000);
@@ -26,8 +25,10 @@ public class App {
         window.add(panel);
         window.setVisible(true);
 
-        sevenSegmentModule.setSize(300, 600);
-        sevenSegmentModule.setSegmentThickness(120);
+        sevenSegmentModule.setSize(300, 1800);
+        sevenSegmentModule.setMutedColor(Color.LIGHT_GRAY);
+        sevenSegmentModule.setShiningColor(Color.RED);
+        sevenSegmentModule.setSegmentThickness(60);
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             sevenSegmentModule.light(i);
