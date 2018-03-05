@@ -2,8 +2,6 @@ package com.wniemiec.component;
 
 import com.wniemiec.component.type.SegmentPositionType;
 import com.wniemiec.component.util.SegmentFactory;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,25 +11,13 @@ import java.util.Map;
 
 public class SevenSegmentModule<T> extends JComponent {
 
-    private final Map<SegmentPositionType, Segment> segments = SegmentFactory.initializeSegments(this);
+    private final Map<SegmentPositionType, Segment> segments;
 
-    @Getter
-    @Setter
-    private int segmentThickness;
+    private final SevenSegmentDisplay<T> sevenSegmentDisplay;
 
-    @Getter
-    @Setter
-    private Color mutedColor = Color.DARK_GRAY;
-
-    @Getter
-    @Setter
-    private Color shiningColor = Color.GREEN;
-
-    @Getter
-    private final ModuleControl<T> moduleControl;
-
-    public SevenSegmentModule(ModuleControl<T> moduleControl) {
-        this.moduleControl = moduleControl;
+    SevenSegmentModule(SevenSegmentDisplay<T> sevenSegmentDisplay) {
+        this.sevenSegmentDisplay = sevenSegmentDisplay;
+        this.segments = SegmentFactory.initializeSegments(this);
         addComponentListener(resizeListener());
     }
 
@@ -39,7 +25,8 @@ public class SevenSegmentModule<T> extends JComponent {
         segments.values()
                 .forEach(Segment::turnOff);
 
-        moduleControl.apply(t)
+        sevenSegmentDisplay.getDisplayControl()
+                .getSegments(t)
                 .stream()
                 .map(segments::get)
                 .forEach(Segment::turnOn);
@@ -61,5 +48,17 @@ public class SevenSegmentModule<T> extends JComponent {
                 segments.values().forEach(Segment::updatePosition);
             }
         };
+    }
+
+    public int getSegmentThickness() {
+        return sevenSegmentDisplay.getSegmentThickness();
+    }
+
+    public Color getMutedColor() {
+        return sevenSegmentDisplay.getMutedColor();
+    }
+
+    public Color getShiningColor() {
+        return sevenSegmentDisplay.getShiningColor();
     }
 }

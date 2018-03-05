@@ -9,30 +9,21 @@ import java.awt.*;
  */
 public class App {
     public static void main(String[] args) throws InterruptedException {
-        SevenSegmentModule<Integer> sevenSegmentModule = new SevenSegmentModule<>(DefaultModuleControl.getInstance());
-
-        JPanel panel = new JPanel();
-        panel.setSize(1000, 1000);
-        panel.setLayout(new BorderLayout());
-        panel.add(sevenSegmentModule, BorderLayout.CENTER);
+        SevenSegmentDisplay<Integer> sevenSegmentDisplay = new SevenSegmentDisplay<>(new DefaultDisplayControl(), 3);
 
         JFrame window = new JFrame();
-        window.setSize(1000, 1000);
-        window.add(panel);
-
-        panel.add(sevenSegmentModule);
-        panel.setVisible(true);
-        window.add(panel);
+        window.setSize(600, 500);
+        window.add(sevenSegmentDisplay);
         window.setVisible(true);
 
-        sevenSegmentModule.setSize(300, 1800);
-        sevenSegmentModule.setMutedColor(Color.LIGHT_GRAY);
-        sevenSegmentModule.setShiningColor(Color.RED);
-        sevenSegmentModule.setSegmentThickness(60);
+        sevenSegmentDisplay.setSize(500, 400);
+        sevenSegmentDisplay.setMutedColor(Color.LIGHT_GRAY);
+        sevenSegmentDisplay.setShiningColor(Color.RED);
+        sevenSegmentDisplay.setSegmentThickness(30);
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            sevenSegmentModule.light(i);
-            Thread.sleep(500L);
+            sevenSegmentDisplay.light(i);
+            Thread.sleep(50L);
         }
     }
 }

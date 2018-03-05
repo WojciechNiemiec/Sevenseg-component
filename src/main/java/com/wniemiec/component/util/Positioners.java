@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public final class Positioners {
 
-    private static final float MARGIN_MULTIPLIER = 0.9f;
+    private static final float MARGIN_MULTIPLIER = 0.6f;
 
     private Positioners() {
     }

@@ -40,7 +40,7 @@ public class DefaultModuleControl implements ModuleControl<Integer> {
      * @return List of segment positions to light
      */
     @Override
-    public List<SegmentPositionType> apply(Integer integer) {
+    public List<SegmentPositionType> getSegments(Integer integer) {
         return segments.get(Math.abs(integer) % 10);
     }
 }

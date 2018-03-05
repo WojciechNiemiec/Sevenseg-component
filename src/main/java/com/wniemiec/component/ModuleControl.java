@@ -5,5 +5,7 @@ import com.wniemiec.component.type.SegmentPositionType;
 import java.util.List;
 import java.util.function.Function;
 
-public interface ModuleControl<T> extends Function<T, List<SegmentPositionType>> {
+public interface ModuleControl<T> {
+
+    List<SegmentPositionType> getSegments(T t);
 }

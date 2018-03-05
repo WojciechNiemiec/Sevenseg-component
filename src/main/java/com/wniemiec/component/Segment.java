@@ -2,13 +2,11 @@ package com.wniemiec.component;
 
 import com.wniemiec.component.type.SegmentPositionType;
 import lombok.Getter;
-import lombok.Setter;
 
-import javax.swing.*;
 import java.awt.*;
 
 @Getter
-public class Segment extends JComponent {
+public class Segment extends Component {
 
     private SevenSegmentModule module;
     private SegmentPositionType segmentPositionType;
