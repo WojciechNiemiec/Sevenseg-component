@@ -4,7 +4,6 @@ import com.wniemiec.component.Segment;
 import com.wniemiec.component.SevenSegmentModule;
 
 import java.awt.*;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 

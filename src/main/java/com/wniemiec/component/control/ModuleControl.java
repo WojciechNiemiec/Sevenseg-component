@@ -1,9 +1,8 @@
-package com.wniemiec.component;
+package com.wniemiec.component.control;
 
 import com.wniemiec.component.type.SegmentPositionType;
 
 import java.util.List;
-import java.util.function.Function;
 
 public interface ModuleControl<T> {
 

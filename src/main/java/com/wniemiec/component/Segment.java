@@ -1,11 +1,9 @@
 package com.wniemiec.component;
 
 import com.wniemiec.component.type.SegmentPositionType;
-import lombok.Getter;
 
 import java.awt.*;
 
-@Getter
 public class Segment extends Component {
 
     private SevenSegmentModule module;
@@ -54,6 +52,10 @@ public class Segment extends Component {
     public void turnOff() {
         actualColor = module.getMutedColor();
         repaint();
+    }
+
+    public SegmentPositionType getSegmentPositionType() {
+        return segmentPositionType;
     }
 
     public SevenSegmentModule getModule() {

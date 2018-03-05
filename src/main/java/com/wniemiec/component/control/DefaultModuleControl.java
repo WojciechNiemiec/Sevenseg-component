@@ -1,4 +1,4 @@
-package com.wniemiec.component;
+package com.wniemiec.component.control;
 
 import com.wniemiec.component.type.SegmentPositionType;
 

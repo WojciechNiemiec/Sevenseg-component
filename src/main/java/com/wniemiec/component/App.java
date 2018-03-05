@@ -1,5 +1,7 @@
 package com.wniemiec.component;
 
+import com.wniemiec.component.control.DefaultDisplayControl;
+
 import javax.swing.*;
 import java.awt.*;
 

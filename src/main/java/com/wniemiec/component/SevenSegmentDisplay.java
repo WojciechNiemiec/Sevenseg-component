@@ -1,7 +1,6 @@
 package com.wniemiec.component;
 
-import lombok.Getter;
-import sun.plugin.dom.exception.InvalidStateException;
+import com.wniemiec.component.control.DisplayControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,6 @@ public class SevenSegmentDisplay<T> extends JComponent {
 
     private List<SevenSegmentModule<T>> modules;
 
-    @Getter
     private DisplayControl<T> displayControl;
 
     private int segmentThickness;
@@ -37,7 +35,7 @@ public class SevenSegmentDisplay<T> extends JComponent {
                 this.add(module);
             }
         } else {
-            throw new InvalidStateException("Modules count must be greater than zero");
+            throw new IllegalStateException("Modules count must be greater than zero");
         }
     }
 
@@ -62,6 +60,10 @@ public class SevenSegmentDisplay<T> extends JComponent {
             module.setPreferredSize(new Dimension(moduleWidth, getHeight()));
         }
         super.repaint();
+    }
+
+    public DisplayControl<T> getDisplayControl() {
+        return displayControl;
     }
 
     public int getSegmentThickness() {
