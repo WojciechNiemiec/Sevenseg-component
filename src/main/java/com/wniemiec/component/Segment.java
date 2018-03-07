@@ -7,6 +7,7 @@ import java.awt.*;
 public class Segment extends Component {
 
     private SevenSegmentModule module;
+    private SevenSegmentDisplay display;
     private SegmentPositionType segmentPositionType;
 
     private Color actualColor;
@@ -45,12 +46,12 @@ public class Segment extends Component {
     }
 
     public void turnOn() {
-        actualColor = module.getShiningColor();
+        actualColor = display.getShiningColor();
         repaint();
     }
 
     public void turnOff() {
-        actualColor = module.getMutedColor();
+        actualColor = display.getMutedColor();
         repaint();
     }
 
@@ -64,7 +65,8 @@ public class Segment extends Component {
 
     public void setModule(SevenSegmentModule module) {
         this.module = module;
-        actualColor = module.getMutedColor();
+        display = module.getSevenSegmentDisplay();
+        actualColor = display.getMutedColor();
     }
 
     private int getLowerDimension() {

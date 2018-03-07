@@ -51,22 +51,14 @@ public class SevenSegmentModule<T> extends JComponent {
     }
 
     public int getActualThickness() {
-        return (int) (getSegmentThickness() / 100f * getLowerDimension());
-    }
-
-    public int getSegmentThickness() {
-        return sevenSegmentDisplay.getSegmentThickness();
-    }
-
-    public Color getMutedColor() {
-        return sevenSegmentDisplay.getMutedColor();
-    }
-
-    public Color getShiningColor() {
-        return sevenSegmentDisplay.getShiningColor();
+        return (int) (sevenSegmentDisplay.getSegmentThickness() / 100f * getLowerDimension());
     }
 
     private int getLowerDimension() {
         return (getWidth() < getHeight()) ? getWidth() : getHeight();
+    }
+
+    public SevenSegmentDisplay getSevenSegmentDisplay() {
+        return sevenSegmentDisplay;
     }
 }
