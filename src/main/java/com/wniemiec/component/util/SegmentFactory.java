@@ -16,19 +16,18 @@ public final class SegmentFactory {
 
     public static Map<SegmentPositionType, Segment> initializeSegments(SevenSegmentModule module) {
         return Stream.of(
-                createSegment(SegmentPositionType.TOP),
-                createSegment(SegmentPositionType.CENTER),
-                createSegment(SegmentPositionType.BOTTOM),
-                createSegment(SegmentPositionType.TOP_LEFT),
-                createSegment(SegmentPositionType.TOP_RIGHT),
-                createSegment(SegmentPositionType.BOTTOM_LEFT),
-                createSegment(SegmentPositionType.BOTTOM_RIGHT)
+                createSegment(module, SegmentPositionType.TOP),
+                createSegment(module, SegmentPositionType.CENTER),
+                createSegment(module, SegmentPositionType.BOTTOM),
+                createSegment(module, SegmentPositionType.TOP_LEFT),
+                createSegment(module, SegmentPositionType.TOP_RIGHT),
+                createSegment(module, SegmentPositionType.BOTTOM_LEFT),
+                createSegment(module, SegmentPositionType.BOTTOM_RIGHT)
         ).peek(module::add)
-                .peek(segment -> segment.setModule(module))
                 .collect(Collectors.toMap(Segment::getSegmentPositionType, Function.identity()));
     }
 
-    private static Segment createSegment(SegmentPositionType segmentPositionType) {
-        return new Segment(segmentPositionType);
+    private static Segment createSegment(SevenSegmentModule module, SegmentPositionType segmentPositionType) {
+        return new Segment(module, segmentPositionType);
     }
 }

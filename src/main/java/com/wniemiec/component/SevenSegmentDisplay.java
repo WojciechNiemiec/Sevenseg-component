@@ -9,10 +9,12 @@ import java.util.List;
 
 public class SevenSegmentDisplay<T> extends JComponent {
 
-    private static final int DEFAULT_SEGMENT_THICKNESS = 20;
+    private static final int DEFAULT_SEGMENT_THICKNESS = 10;
     private static final Dimension DEFAULT_SIZE = new Dimension(400, 100);
 
-    private List<SevenSegmentModule<T>> modules;
+    private final List<SevenSegmentModule<T>> modules = new ArrayList<>();
+
+    private final List<Dot> dots = new ArrayList<>();
 
     private DisplayControl<T> displayControl;
 
@@ -42,18 +44,9 @@ public class SevenSegmentDisplay<T> extends JComponent {
         }
     }
 
-    private void createModules(int modulesCount) {
-        modules = new ArrayList<>(modulesCount);
-
-        for (int i = 0; i < modulesCount; i++) {
-            SevenSegmentModule<T> module = new SevenSegmentModule<>(this);
-            modules.add(module);
-            this.add(module);
-        }
-    }
-
     public void setModulesCount(int modulesCount) {
         removeAll();
+        modules.clear();
         setLayout(new BorderLayout());
         createModules(modulesCount);
     }
@@ -83,11 +76,17 @@ public class SevenSegmentDisplay<T> extends JComponent {
 
     @Override
     public void repaint() {
-        int moduleWidth = getWidth() / modules.size() - segmentThickness;
-        layoutManager.setHgap(segmentThickness / getLowerDimension());
+        int actualThickness = getActualThickness();
+        int moduleWidth = getWidth() / modules.size() - actualThickness * 3;
+        layoutManager.setHgap(actualThickness);
         for (SevenSegmentModule module : modules) {
             module.setPreferredSize(new Dimension(moduleWidth, getHeight()));
         }
+
+        for (Dot dot : dots) {
+            dot.setPreferredSize(new Dimension(actualThickness, getHeight()));
+        }
+
         super.repaint();
     }
 
@@ -99,12 +98,14 @@ public class SevenSegmentDisplay<T> extends JComponent {
         return segmentThickness;
     }
 
-
-
     public void setSegmentThickness(int segmentThickness) {
         this.segmentThickness = segmentThickness;
-        setLayout(new FlowLayout(FlowLayout.CENTER, segmentThickness, 0));
+        setLayout(new FlowLayout(FlowLayout.LEFT, segmentThickness, 0));
         repaint();
+    }
+
+    public int getActualThickness() {
+        return (int) (getSegmentThickness() / 100f * getLowerDimension());
     }
 
     public Color getMutedColor() {
@@ -127,5 +128,25 @@ public class SevenSegmentDisplay<T> extends JComponent {
 
     private int getLowerDimension() {
         return (getWidth() < getHeight()) ? getWidth() : getHeight();
+    }
+
+    private void createModules(int modulesCount) {
+        addModule();
+        for (int i = 1; i < modulesCount; i++) {
+            addDot();
+            addModule();
+        }
+    }
+
+    private void addDot() {
+        Dot dot = new Dot(this);
+        dots.add(dot);
+        this.add(dot);
+    }
+
+    private void addModule() {
+        SevenSegmentModule<T> module = new SevenSegmentModule<>(this);
+        modules.add(module);
+        this.add(module);
     }
 }

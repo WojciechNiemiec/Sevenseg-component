@@ -3,6 +3,7 @@ package com.wniemiec.component;
 import com.wniemiec.component.type.SegmentPositionType;
 
 import java.awt.*;
+import java.util.function.Supplier;
 
 public class Segment extends Component {
 
@@ -10,16 +11,23 @@ public class Segment extends Component {
     private SevenSegmentDisplay display;
     private SegmentPositionType segmentPositionType;
 
-    private Color actualColor;
+    private Supplier<Color> shiningColor;
+    private Supplier<Color> mutedColor;
+    private Supplier<Color> actualColor;
 
-    public Segment(SegmentPositionType segmentPositionType) {
+    public Segment(SevenSegmentModule module, SegmentPositionType segmentPositionType) {
+        this.module = module;
         this.segmentPositionType = segmentPositionType;
+        display = module.getSevenSegmentDisplay();
+        shiningColor = display::getShiningColor;
+        mutedColor = display::getMutedColor;
+        actualColor = mutedColor;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(actualColor);
+        g.setColor(actualColor.get());
         g.fillPolygon(preparePolygon());
     }
 
@@ -45,14 +53,12 @@ public class Segment extends Component {
         repaint();
     }
 
-    public void turnOn() {
-        actualColor = display.getShiningColor();
-        repaint();
+    void turnOn() {
+        actualColor = shiningColor;
     }
 
-    public void turnOff() {
-        actualColor = display.getMutedColor();
-        repaint();
+    void turnOff() {
+        actualColor = mutedColor;
     }
 
     public SegmentPositionType getSegmentPositionType() {
@@ -61,12 +67,6 @@ public class Segment extends Component {
 
     public SevenSegmentModule getModule() {
         return module;
-    }
-
-    public void setModule(SevenSegmentModule module) {
-        this.module = module;
-        display = module.getSevenSegmentDisplay();
-        actualColor = display.getMutedColor();
     }
 
     private int getLowerDimension() {

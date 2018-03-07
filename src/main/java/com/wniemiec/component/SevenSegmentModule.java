@@ -51,11 +51,7 @@ public class SevenSegmentModule<T> extends JComponent {
     }
 
     public int getActualThickness() {
-        return (int) (sevenSegmentDisplay.getSegmentThickness() / 100f * getLowerDimension());
-    }
-
-    private int getLowerDimension() {
-        return (getWidth() < getHeight()) ? getWidth() : getHeight();
+        return sevenSegmentDisplay.getActualThickness();
     }
 
     public SevenSegmentDisplay getSevenSegmentDisplay() {

@@ -13,7 +13,7 @@ public class App {
 
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setSize(1000, 300);
+        window.setSize(1800, 300);
         window.add(sevenSegmentDisplay);
         window.setVisible(true);
 
@@ -24,6 +24,9 @@ public class App {
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             sevenSegmentDisplay.setValue(i);
             Thread.sleep(100L);
+//            if (i == 10) {
+//                sevenSegmentDisplay.setModulesCount(4);
+//            }
         }
     }
 }
