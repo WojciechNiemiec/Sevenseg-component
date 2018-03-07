@@ -1,7 +1,5 @@
 package com.wniemiec.component;
 
-import com.wniemiec.component.control.DefaultDisplayControl;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,25 +9,21 @@ import java.awt.*;
  */
 public class App {
     public static void main(String[] args) throws InterruptedException {
-        SevenSegmentDisplay<Integer> sevenSegmentDisplay = new SevenSegmentDisplay<>(new DefaultDisplayControl(), 5);
+        IntegerSegmentDisplay sevenSegmentDisplay = new IntegerSegmentDisplay();
 
         JFrame window = new JFrame();
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(1000, 300);
         window.add(sevenSegmentDisplay);
         window.setVisible(true);
 
         sevenSegmentDisplay.setMutedColor(new Color(20,20,20));
         sevenSegmentDisplay.setBackground(Color.BLACK);
-        sevenSegmentDisplay.setSegmentThickness(30);
+        sevenSegmentDisplay.setShiningColor(Color.RED);
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            sevenSegmentDisplay.light(i);
-            sevenSegmentDisplay.setShiningColor(new Color(random(), random(), random()));
+            sevenSegmentDisplay.setValue(i);
             Thread.sleep(100L);
         }
-    }
-
-    private static int random() {
-        return (int)(Math.random() * 155) + 100;
     }
 }

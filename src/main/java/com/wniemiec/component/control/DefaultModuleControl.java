@@ -33,11 +33,11 @@ public class DefaultModuleControl implements ModuleControl<Integer> {
     }
 
     /**
-     * This method takes any integer number and converts it to List of segment positions to light.
+     * This method takes any integer number and converts it to List of segment positions to setValue.
      * Method takes the least significant digit only.
      *
      * @param integer any number
-     * @return List of segment positions to light
+     * @return List of segment positions to setValue
      */
     @Override
     public List<SegmentPositionType> getSegments(Integer integer) {

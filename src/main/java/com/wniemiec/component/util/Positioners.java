@@ -19,11 +19,11 @@ public final class Positioners {
     }
 
     public static Consumer<Segment> center() {
-        return segment -> positionHorizontally(segment, module -> module.getHeight() / 2 - module.getSegmentThickness() / 2);
+        return segment -> positionHorizontally(segment, module -> module.getHeight() / 2 - module.getActualThickness() / 2);
     }
 
     public static Consumer<Segment> bottom() {
-        return segment -> positionHorizontally(segment, module -> module.getHeight() - module.getSegmentThickness());
+        return segment -> positionHorizontally(segment, module -> module.getHeight() - module.getActualThickness());
     }
 
     public static Consumer<Segment> topLeft() {
@@ -31,19 +31,19 @@ public final class Positioners {
     }
 
     public static Consumer<Segment> topRight() {
-        Locator locator = (module, margin) -> new Point(module.getWidth() - module.getSegmentThickness(), margin);
+        Locator locator = (module, margin) -> new Point(module.getWidth() - module.getActualThickness(), margin);
         return segment -> positionVertically(segment, locator);
     }
 
     public static Consumer<Segment> bottomLeft() {
-        Locator locator = (module, margin) -> new Point(0, module.getHeight() / 2 - module.getSegmentThickness() / 2 + margin);
+        Locator locator = (module, margin) -> new Point(0, module.getHeight() / 2 - module.getActualThickness() / 2 + margin);
         return segment -> positionVertically(segment, locator);
     }
 
     public static Consumer<Segment> bottomRight() {
         Locator locator = (module, margin) -> new Point(
-                module.getWidth() - module.getSegmentThickness(),
-                module.getHeight() / 2 - module.getSegmentThickness() / 2 + margin);
+                module.getWidth() - module.getActualThickness(),
+                module.getHeight() / 2 - module.getActualThickness() / 2 + margin);
 
         return segment -> positionVertically(segment, locator);
     }
@@ -52,17 +52,17 @@ public final class Positioners {
         SevenSegmentModule module = segment.getModule();
         int margin = getMargin(module);
         segment.setLocation(margin, heightSupplier.apply(module));
-        segment.setSize(module.getWidth() - 2 * margin, module.getSegmentThickness());
+        segment.setSize(module.getWidth() - 2 * margin, module.getActualThickness());
     }
 
     private static void positionVertically(Segment segment, Locator locator) {
         SevenSegmentModule module = segment.getModule();
         int margin = getMargin(module);
         segment.setLocation(locator.getLocation(module, margin));
-        segment.setSize(module.getSegmentThickness(), module.getHeight() / 2 + module.getSegmentThickness() / 2 - margin * 2);
+        segment.setSize(module.getActualThickness(), module.getHeight() / 2 + module.getActualThickness() / 2 - margin * 2);
     }
 
     private static int getMargin(SevenSegmentModule<?> module) {
-        return (int) (module.getSegmentThickness() * MARGIN_MULTIPLIER);
+        return (int) (module.getActualThickness() * MARGIN_MULTIPLIER);
     }
 }
