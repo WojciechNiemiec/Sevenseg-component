@@ -9,19 +9,19 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Map;
 
-public class SevenSegmentModule<T> extends JComponent {
+public class SevenSegmentModule<V> extends JComponent {
 
     private final Map<SegmentPositionType, Segment> segments;
 
-    private final SevenSegmentDisplay<T> sevenSegmentDisplay;
+    private final SevenSegmentDisplay<?, V> sevenSegmentDisplay;
 
-    SevenSegmentModule(SevenSegmentDisplay<T> sevenSegmentDisplay) {
+    SevenSegmentModule(SevenSegmentDisplay<?, V> sevenSegmentDisplay) {
         this.sevenSegmentDisplay = sevenSegmentDisplay;
         this.segments = SegmentFactory.initializeSegments(this);
         addComponentListener(resizeListener());
     }
 
-    public void light(T t) {
+    public void light(V t) {
         segments.values()
                 .forEach(Segment::turnOff);
 

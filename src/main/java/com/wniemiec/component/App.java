@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public class App {
     public static void main(String[] args) throws InterruptedException {
-        IntegerSegmentDisplay sevenSegmentDisplay = new IntegerSegmentDisplay();
+        DoubleSegmentDisplay sevenSegmentDisplay = new DoubleSegmentDisplay();
 
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -22,7 +22,7 @@ public class App {
         sevenSegmentDisplay.setShiningColor(Color.RED);
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            sevenSegmentDisplay.setValue(i);
+            sevenSegmentDisplay.setValue(Math.random() * 1000);
             Thread.sleep(100L);
 //            if (i == 10) {
 //                sevenSegmentDisplay.setModulesCount(4);

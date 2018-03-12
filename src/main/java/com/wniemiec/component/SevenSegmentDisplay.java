@@ -7,16 +7,16 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SevenSegmentDisplay<T> extends JComponent {
+public abstract class SevenSegmentDisplay<T, V> extends JComponent {
 
     private static final int DEFAULT_SEGMENT_THICKNESS = 10;
     private static final Dimension DEFAULT_SIZE = new Dimension(400, 100);
 
-    private final List<SevenSegmentModule<T>> modules = new ArrayList<>();
+    private final List<SevenSegmentModule<V>> modules = new ArrayList<>();
 
     private final List<Dot> dots = new ArrayList<>();
 
-    private DisplayControl<T> displayControl;
+    private DisplayControl<T, V> displayControl;
 
     private T value;
 
@@ -28,11 +28,11 @@ public class SevenSegmentDisplay<T> extends JComponent {
 
     private FlowLayout layoutManager = new FlowLayout(FlowLayout.CENTER, segmentThickness, 0);
 
-    public SevenSegmentDisplay(DisplayControl<T> displayControl) {
+    public SevenSegmentDisplay(DisplayControl<T, V> displayControl) {
         this(displayControl, 1);
     }
 
-    public SevenSegmentDisplay(DisplayControl<T> displayControl, int modulesCount) {
+    public SevenSegmentDisplay(DisplayControl<T, V> displayControl, int modulesCount) {
         if (modulesCount > 0) {
             this.displayControl = displayControl;
             setLayout(layoutManager);
@@ -57,10 +57,7 @@ public class SevenSegmentDisplay<T> extends JComponent {
 
     public void setValue(T t) {
         value = t;
-        for (int i = 0; i < modules.size(); i++) {
-            int valueIndex = modules.size() - 1 - i;
-            modules.get(i).light(displayControl.split(valueIndex, value));
-        }
+        displayControl.light(modules, t);
     }
 
     public T getValue() {
@@ -90,7 +87,7 @@ public class SevenSegmentDisplay<T> extends JComponent {
         super.repaint();
     }
 
-    public DisplayControl<T> getDisplayControl() {
+    public DisplayControl<T, V> getDisplayControl() {
         return displayControl;
     }
 
@@ -145,7 +142,7 @@ public class SevenSegmentDisplay<T> extends JComponent {
     }
 
     private void addModule() {
-        SevenSegmentModule<T> module = new SevenSegmentModule<>(this);
+        SevenSegmentModule<V> module = new SevenSegmentModule<>(this);
         modules.add(module);
         this.add(module);
     }

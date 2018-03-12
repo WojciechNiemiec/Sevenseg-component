@@ -1,20 +1,30 @@
 package com.wniemiec.component.control;
 
+import com.wniemiec.component.SevenSegmentModule;
 import com.wniemiec.component.type.SegmentPositionType;
 
 import java.util.List;
 
-public class DefaultDisplayControl implements DisplayControl<Integer> {
+public class DefaultDisplayControl implements DisplayControl<String, Character> {
 
-    private ModuleControl<Integer> moduleControl = DefaultModuleControl.getInstance();
+    private ModuleControl<Character> moduleControl = DefaultModuleControl.getInstance();
 
     @Override
-    public Integer split(int index, Integer data) {
-        return data / (int)Math.pow(10, index);
+    public void light(List<SevenSegmentModule<Character>> modules, String value) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < modules.size() - value.length(); i++) {
+            stringBuilder.append(' ');
+        }
+
+        String text = stringBuilder.append(value).toString();
+
+        for (int i = 0; i < modules.size(); i++) {
+            modules.get(i).light(text.charAt(i));
+        }
     }
 
     @Override
-    public List<SegmentPositionType> getSegments(Integer integer) {
-        return moduleControl.getSegments(integer);
+    public List<SegmentPositionType> getSegments(Character character) {
+        return moduleControl.getSegments(character);
     }
 }
