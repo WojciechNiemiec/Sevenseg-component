@@ -57,7 +57,7 @@ public abstract class SevenSegmentDisplay<T, V> extends JComponent {
 
     public void setValue(T t) {
         value = t;
-        displayControl.light(modules, t);
+        displayControl.light(modules, dots, t);
     }
 
     public T getValue() {
@@ -76,6 +76,7 @@ public abstract class SevenSegmentDisplay<T, V> extends JComponent {
         int actualThickness = getActualThickness();
         int moduleWidth = getWidth() / modules.size() - actualThickness * 3;
         layoutManager.setHgap(actualThickness);
+
         for (SevenSegmentModule module : modules) {
             module.setPreferredSize(new Dimension(moduleWidth, getHeight()));
         }

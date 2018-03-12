@@ -27,11 +27,13 @@ public class Dot extends JComponent {
         g.fillRect(0, getHeight() - actualThickness, getWidth(), actualThickness);
     }
 
-    void turnOn() {
+    public void turnOn() {
         actualColor = shiningColor;
+        repaint();
     }
 
-    void turnOff() {
+    public void turnOff() {
         actualColor = mutedColor;
+        repaint();
     }
 }

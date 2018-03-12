@@ -24,6 +24,7 @@ public class DefaultModuleControl implements ModuleControl<Character> {
         segments.put('8', Arrays.asList(TOP, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, TOP_LEFT, CENTER));
         segments.put('9', Arrays.asList(TOP, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM, TOP_LEFT, CENTER));
         segments.put(' ', Collections.emptyList());
+        segments.put('.', Collections.emptyList());
         segments.put('-', Collections.singletonList(CENTER));
         segments.put('a', Arrays.asList(TOP, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, TOP_LEFT, CENTER));
         segments.put('b', Arrays.asList(BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, TOP_LEFT, CENTER));
@@ -65,6 +66,6 @@ public class DefaultModuleControl implements ModuleControl<Character> {
     @Override
     public List<SegmentPositionType> getSegments(Character character) {
         char c = Character.toLowerCase(character);
-        return segments.get(c);
+        return (segments.containsKey(c)) ? segments.get(c) : segments.get('.');
     }
 }

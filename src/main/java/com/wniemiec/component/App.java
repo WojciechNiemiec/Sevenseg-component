@@ -23,10 +23,15 @@ public class App {
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             sevenSegmentDisplay.setValue(Math.random() * 1000);
-            Thread.sleep(100L);
-//            if (i == 10) {
-//                sevenSegmentDisplay.setModulesCount(4);
-//            }
+            Thread.sleep(1000L);
+            sevenSegmentDisplay.setValue(Math.random() * 10);
+            Thread.sleep(1000L);
+            sevenSegmentDisplay.setValue(-Math.random() * 100);
+            Thread.sleep(1000L);
+            sevenSegmentDisplay.setValue(Math.random() * 10000);
+            Thread.sleep(1000L);
+            sevenSegmentDisplay.setValue(Math.random());
+            Thread.sleep(1000L);
         }
     }
 }
