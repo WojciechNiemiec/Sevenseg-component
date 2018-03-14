@@ -12,7 +12,11 @@ public class DoubleDisplayControl implements DisplayControl<Double, Character> {
 
     @Override
     public void light(List<SevenSegmentModule<Character>> sevenSegmentModules, List<Dot> dots, Double value) {
-        delegate.light(sevenSegmentModules, dots, String.valueOf(value));
+        String stringValue = String.valueOf(value);
+        if (sevenSegmentModules.size() < stringValue.indexOf('.')) {
+            stringValue = "error";
+        }
+        delegate.light(sevenSegmentModules, dots, stringValue);
     }
 
     @Override

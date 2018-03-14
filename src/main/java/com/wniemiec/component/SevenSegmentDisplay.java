@@ -4,17 +4,18 @@ import com.wniemiec.component.control.DisplayControl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public abstract class SevenSegmentDisplay<T, V> extends JComponent {
 
     private static final int DEFAULT_SEGMENT_THICKNESS = 10;
+    private static final int MINIMAL_MODULES_COUNT = 1;
+    private static final int MAXIMAL_MODULES_COUNT = 10;
     private static final Dimension DEFAULT_SIZE = new Dimension(400, 100);
 
-    private final List<SevenSegmentModule<V>> modules = new ArrayList<>();
+    private final LinkedList<SevenSegmentModule<V>> modules = new LinkedList<>();
 
-    private final List<Dot> dots = new ArrayList<>();
+    private final LinkedList<Dot> dots = new LinkedList<>();
 
     private DisplayControl<T, V> displayControl;
 
@@ -45,10 +46,23 @@ public abstract class SevenSegmentDisplay<T, V> extends JComponent {
     }
 
     public void setModulesCount(int modulesCount) {
-        removeAll();
-        modules.clear();
-        setLayout(new BorderLayout());
-        createModules(modulesCount);
+        validateModulesCount(modulesCount);
+
+        if (modules.size() > modulesCount) {
+            int modulesToRemove = modules.size() - modulesCount;
+            for (int i = 0; i < modulesToRemove; i++) {
+                removeModule();
+                removeDot();
+            }
+        } else {
+            int modulesToAdd = modulesCount - modules.size();
+            for (int i = 0; i < modulesToAdd; i++) {
+                addModule();
+                addDot();
+            }
+        }
+        revalidate();
+        repaint();
     }
 
     public int getModulesCount() {
@@ -58,6 +72,7 @@ public abstract class SevenSegmentDisplay<T, V> extends JComponent {
     public void setValue(T t) {
         value = t;
         displayControl.light(modules, dots, t);
+        repaint();
     }
 
     public T getValue() {
@@ -136,15 +151,34 @@ public abstract class SevenSegmentDisplay<T, V> extends JComponent {
         }
     }
 
+    private void addModule() {
+        SevenSegmentModule<V> module = new SevenSegmentModule<>(this);
+        modules.add(module);
+        this.add(module);
+    }
+
+    private void removeModule() {
+        remove(modules.pollLast());
+    }
+
     private void addDot() {
         Dot dot = new Dot(this);
         dots.add(dot);
         this.add(dot);
     }
 
-    private void addModule() {
-        SevenSegmentModule<V> module = new SevenSegmentModule<>(this);
-        modules.add(module);
-        this.add(module);
+    private void removeDot() {
+        remove(dots.pollLast());
+    }
+
+    private void validateModulesCount(int modulesCount) {
+        if (modulesCount < MINIMAL_MODULES_COUNT || modulesCount > MAXIMAL_MODULES_COUNT) {
+            throw new UnsupportedOperationException(
+                    String.format("Modules count must be between %d and %d but the attempted value is %d",
+                            MINIMAL_MODULES_COUNT,
+                            MAXIMAL_MODULES_COUNT,
+                            modulesCount)
+            );
+        }
     }
 }

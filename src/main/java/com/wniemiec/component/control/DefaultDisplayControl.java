@@ -21,8 +21,12 @@ public class DefaultDisplayControl implements DisplayControl<String, Character> 
         dots.forEach(Dot::turnOff);
 
         if (text.contains(".")) {
-            dots.get(text.indexOf('.') - 1).turnOn();
-            text = text.replace(".","");
+            int dotIndex = text.indexOf('.') - 1;
+
+            if (dotIndex >= 0 && dotIndex < dots.size()) {
+                dots.get(dotIndex).turnOn();
+                text = text.replace(".","");
+            }
         }
 
         for (int i = 0; i < modules.size(); i++) {
